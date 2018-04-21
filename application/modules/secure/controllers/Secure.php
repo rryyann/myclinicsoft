@@ -17,15 +17,19 @@ class Secure extends CI_Controller {
 	
     function __construct() {
         parent::__construct();
+
+        $this->permission_check(uri_string(), 'view');
+
+        $this->load->helper('encode');
+
         $this->load->library('auth/tank_auth');
+
         $this->load->model('user/User_model');
         $this->load->model('roles/Role');
         $this->load->model('settings/Setting');
         $this->load->model('modules/Module');
         $this->load->model('common/Common');
 
-		$this->permission_check(uri_string(), 'view');
-		
 		$this->role_id = $this->tank_auth->get_role_id();
         $this->license_id = $this->tank_auth->get_license_key();
         $this->user_id = $this->tank_auth->get_user_id();
@@ -36,8 +40,11 @@ class Secure extends CI_Controller {
 		
 		$this->admin_role_id = $this->Role->get_default_role(2, $this->license_id);
 		$this->patient_role_id = $this->Role->get_default_patient_role($this->license_id);
+
 		$this->company_info = $this->Common->get_subscription_info($this->license_id);
+
 		$this->subscription_counts = $this->check_subscription($this->company_info);
+		
 		if (!$this->is_login) {
 
             $this->session->set_userdata("currentUrl", current_url());

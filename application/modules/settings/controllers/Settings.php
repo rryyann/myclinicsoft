@@ -68,7 +68,7 @@ class Settings extends Secure {
 			
 		
 			$data['info'] = $this->User_model->get_profile_info($id);
-			$this->load->view('ajax/profile', $data);
+			$this->load->view('user/profile', $data);
         } 
 		else
 		{

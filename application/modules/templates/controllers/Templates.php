@@ -19,7 +19,7 @@ class Templates extends Secure {
         $this->display_error_log($directory,$class_name,$method);
     }
 
-    private function _init()
+    private function _init($data)
 	{
 		
 		$this->template
@@ -27,14 +27,14 @@ class Templates extends Secure {
 
 			->set_partial('header', 'include/header') //third param optional $data
 			->set_partial('sidebar', 'include/sidebar') //third param optional $data
-			->set_partial('ribbon', 'include/ribbon') //third param optional $data
+			->set_partial('ribbon', 'include/ribbon', $data) //third param optional $data
 			->set_partial('footer', 'include/footer') //third param optional $data
 			->set_partial('shortcut', 'include/shortcut') //third param optional $data
 			->set_metadata('author', 'Randy Rebucas')
 			// application/views/some_folder/header
 			//->inject_partial('header', '<h1>Hello World!</h1>')  //third param optional $data
 			->set_layout('full-column') // application/views/layouts/two_col.php
-			->build('manage'); // views/welcome_message);
+			->build('manage', $data); // views/welcome_message);
 		
 	}
 

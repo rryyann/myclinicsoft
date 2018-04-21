@@ -23,7 +23,7 @@
 	define('DB_SERVER','localhost'); 
 	define('DB_USERNAME','root'); 
 	define('DB_PASSWORD',''); 
-	define('DB_NAME','mcs-dev');	
+	define('DB_NAME','mcs');	
 		
 	/**
 	 * The table prefix can be left blank. A quick example of what you should input here:

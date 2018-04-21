@@ -5,8 +5,10 @@ class User extends Secure {
 
 	function __construct() {
         parent::__construct();
-		// $this->load->helper('encrpt');
-		$this->load->library('encrypt');
+		$this->load->helper('encode');
+
+		$this->load->language('user', 'english');
+        $this->load->language('common/common', 'english');
     }
 
     function _remap($method, $params = array()) {
@@ -20,38 +22,36 @@ class User extends Secure {
         $this->display_error_log($directory,$class_name,$method);
     }
 
-    private function _init()
+    private function _init($data)
 	{
 		
 		$this->template
-			->title('User') //$article->title
-			->prepend_metadata('<script src="/js/jquery.js"></script>')
-			->append_metadata('<script src="/js/jquery.flot.js"></script>')
+			->title(get_class($this)) //$article->title
 			// application/views/some_folder/header
 			->set_partial('header', 'include/header') //third param optional $data
 			->set_partial('sidebar', 'include/sidebar') //third param optional $data
-			->set_partial('ribbon', 'include/ribbon') //third param optional $data
+			->set_partial('ribbon', 'include/ribbon', $data) //third param optional $data
 			->set_partial('footer', 'include/footer') //third param optional $data
 			->set_partial('shortcut', 'include/shortcut') //third param optional $data
 			->set_metadata('author', 'Randy Rebucas')
 			// application/views/some_folder/header
 			//->inject_partial('header', '<h1>Hello World!</h1>')  //third param optional $data
 			->set_layout('full-column') // application/views/layouts/two_col.php
-			->build('manage'); // views/welcome_message
+			->build('manage', $data); // views/welcome_message
 		
 	}
 
 	function index()
 	{
-
+		$data['module'] = get_class();
 		if ($this->input->is_ajax_request()) 
 		{
-			$data['module'] = get_class();
-			$this->load->view('ajax/users', $data);
+			
+			$this->load->view('manage', $data);
         } 
 		else
 		{
-			$this->_init();
+			$this->_init($data);
 		}
 	}
 
@@ -83,9 +83,10 @@ class User extends Secure {
     }
 	
     function view($id = -1){
+
         if ($this->input->is_ajax_request()) 
 		{
-
+			$this->load->model('roles/Role');
 			$data['info'] = $this->Patient->get_info($id);
 			
 			$roles = array('' => 'Select');
@@ -95,7 +96,8 @@ class User extends Secure {
 			}
 			$data['roles'] = $roles;
 			$data['option'] = $this->session->userdata('option');
-	        $this->load->view("ajax/users_form", $data);
+	        $this->load->view("form", $data);
+	        
 	    }else{
 	    	$this->session->set_flashdata('alert_error', 'Sorry! Page cannot open by new tab');
             redirect('');
@@ -199,6 +201,8 @@ class User extends Secure {
 	
 	function do_update(){
 
+		$this->load->model('user/User_model');
+
 		$name = $this->input->post('name');
 		$pk = $this->input->post('pk');
 		$value = $this->input->post('value');
@@ -207,7 +211,7 @@ class User extends Secure {
 		$data = array(
 			$name => $value
 		);
-		if($this->Person->update($data, $table, $pk))
+		if($this->User_model->update($data, $table, $pk))
 		{
 		
 			echo json_encode(array(
@@ -228,7 +232,9 @@ class User extends Secure {
     function details($id = -1){
     	if ($this->input->is_ajax_request()) 
 		{
-	    	
+			
+	    	$this->load->model('patients/Patient');
+
 			$data['info'] = $this->Patient->get_profile_info($id);
 	        $this->load->view("ajax/users_detail", $data);
 	    }else{

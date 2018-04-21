@@ -21,7 +21,9 @@
 
 	<!-- col -->
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<h1 class="page-title txt-color-blueDark"><?php echo sprintf($this->lang->line('__common_welcome'), $user_info->username);?> </h1>
+		<h1 class="page-title txt-color-blueDark">
+			<?php echo sprintf($this->lang->line(strtolower($module).'_welcome'), $user_info->username);?> 
+		</h1>
 	</div>
 	<!-- end col -->
 
@@ -43,10 +45,10 @@ the <section></section> and you can use wells or panels instead
 		<div class="col-sm-12 col-md-8 col-lg-8 well" id="post" >
 
 			<?php echo form_open('posts/create','class="well padding-bottom-10" id="form-post"');?>	
-				<textarea rows="2" class="form-control" name="post_message" id="post_message" placeholder="What are you thinking?"></textarea>
+				<textarea rows="2" class="form-control" name="post_message" id="post_message" placeholder="<?php echo $this->lang->line('posts_what_are_you_thinking');?>"></textarea>
 				<div class="margin-top-10">
 					<button type="submit" class="btn btn-sm btn-primary pull-right" id="post-submit">
-						Post
+						<?php echo $this->lang->line('posts_post');?>
 					</button>
 					<a href="javascript:void(0);" class="btn btn-link profile-link-btn hidden" rel="tooltip" data-placement="bottom" title="Add Location"><i class="fa fa-location-arrow"></i></a>
 					<a href="javascript:void(0);" class="btn btn-link profile-link-btn hidden" rel="tooltip" data-placement="bottom" title="Add Voice"><i class="fa fa-microphone"></i></a>
@@ -65,10 +67,6 @@ the <section></section> and you can use wells or panels instead
 
 			<h1><small>Connections</small></h1>
 			<ul class="list-inline connections-list"></ul>-->
-			
-			<div class="fb-page" data-href="https://business.facebook.com/myclinicsoftware" data-tabs="timeline" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://business.facebook.com/myclinicsoftware" class="fb-xfbml-parse-ignore"><a href="https://business.facebook.com/myclinicsoftware">My Clinic Software</a></blockquote></div>
-			
-			<hr>
 			
 		</div>
 	</div>
@@ -130,7 +128,7 @@ the <section></section> and you can use wells or panels instead
 
 				if (response.length === 0) {
 					
-					$('<div class="alert alert-info text-center empty-post">Create your first post.</div>').appendTo('#post');
+					$('<div class="alert alert-info text-center empty-post"><?php echo $this->lang->line('posts_create_your_first_post');?></div>').appendTo('#post');
 					
 				}else{
 

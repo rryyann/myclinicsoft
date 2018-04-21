@@ -5,7 +5,7 @@ class Roles extends Secure {
 
 	function __construct() {
         parent::__construct();
-
+        $this->load->model('Role');
     }
 
     function _remap($method, $params = array()) {
@@ -19,14 +19,11 @@ class Roles extends Secure {
         $this->display_error_log($directory,$class_name,$method);
     }
 
-    private function _init()
+    private function _init($data)
 	{
 		
 		$this->template
-			->title('Roles') //$article->title
-			->prepend_metadata('<script src="/js/jquery.js"></script>')
-			->append_metadata('<script src="/js/jquery.flot.js"></script>')
-			// application/views/some_folder/header
+			->title(get_class($this)) //$article->title			// application/views/some_folder/header
 			->set_partial('header', 'include/header') //third param optional $data
 			->set_partial('sidebar', 'include/sidebar') //third param optional $data
 			->set_partial('ribbon', 'include/ribbon') //third param optional $data
@@ -36,21 +33,21 @@ class Roles extends Secure {
 			// application/views/some_folder/header
 			//->inject_partial('header', '<h1>Hello World!</h1>')  //third param optional $data
 			->set_layout('full-column') // application/views/layouts/two_col.php
-			->build('manage'); // views/welcome_message
+			->build('manage', $data); // views/welcome_message
 		
 	}
 
 	function index()
 	{
-
+		$data['module'] = get_class();
 		if ($this->input->is_ajax_request()) 
 		{
-			$data['module'] = get_class();
-			$this->load->view('ajax/roles', $data);
+			
+			$this->load->view('manage', $data);
         } 
 		else
 		{
-			$this->_init();
+			$this->_init($data);
 		}
 	}
 
@@ -75,6 +72,7 @@ class Roles extends Secure {
     }
 	
     function view($id = -1){
+
         if ($this->input->is_ajax_request()) 
 		{
 
@@ -87,7 +85,7 @@ class Roles extends Secure {
 			}
 			$data['roles'] = $roles;
 		
-	        $this->load->view("ajax/roles_form", $data);
+	        $this->load->view("form", $data);
 	    }else{
 	    	$this->session->set_flashdata('alert_error', 'Sorry! Page cannot open by new tab');
             redirect('');
@@ -127,7 +125,7 @@ class Roles extends Secure {
     	if ($this->input->is_ajax_request()) 
 		{
 	    	$data['info'] = $this->Role->get_info($id);
-	        $this->load->view("ajax/roles_detail", $data);
+	        $this->load->view("detail", $data);
 	    }else{
 	    	$this->session->set_flashdata('alert_error', 'Sorry! Page cannot open by new tab');
             redirect('');

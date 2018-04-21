@@ -58,27 +58,22 @@ the <section></section> and you can use wells or panels instead
 					<div class="widget-body">
 
 						<p>
-							<?php echo $this->lang->line('config_customize_your_settings');?>
+							<?php echo $this->lang->line('setting_customize_your_settings');?>
 						</p>
 						<hr class="simple">			
 
-
-
 						<ul id="myTab1" class="nav nav-tabs bordered">
-							<li <?php if($filter_option == 'general') echo 'class="active"';?>>
-								<a href="<?php echo site_url('settings/general');?>" class="ajaxSoft"><i class="fa fa-fw fa-lg fa-gear"></i> <?php echo $this->lang->line('config_general');?></a>
+							<li class="active">
+								<a href="#general-tab" data-toggle="tab"><i class="fa fa-fw fa-lg fa-gear"></i> <?php echo $this->lang->line('setting_general');?></a>
 							</li>
-							<li <?php if($filter_option == 'email') echo 'class="active"';?>>
-								<a href="<?php echo site_url('settings/email');?>" class="ajaxSoft"><i class="fa fa-fw fa-lg fa-envelope"></i> <?php echo $this->lang->line('config_email');?></a>
+							<li>
+								<a href="#email-tab" data-toggle="tab"><i class="fa fa-fw fa-lg fa-envelope"></i> <?php echo $this->lang->line('setting_email');?></a>
 							</li>
-							<li <?php if($filter_option == 'profile-visibility') echo 'class="active"';?>>
-								<a href="<?php echo site_url('settings/profile-visibility');?>" class="ajaxSoft"><i class="fa fa-fw fa-lg fa-eye"></i> <?php echo $this->lang->line('config_profile_visibility');?></a>
+							<li>
+								<a href="#visibility-tab" data-toggle="tab"><i class="fa fa-fw fa-lg fa-eye"></i> <?php echo $this->lang->line('setting_profile_visibility');?></a>
 							</li>
-							<li <?php if($filter_option == 'templates') echo 'class="active"';?>>
-								<a href="<?php echo site_url('settings/templates');?>" class="ajaxSoft"><i class="fa fa-fw fa-lg fa-list"></i> <?php echo $this->lang->line('config_templates');?></a>
-							</li>
-							<li <?php if($filter_option == 'delete-account') echo 'class="active"';?>>
-								<a href="<?php echo site_url('settings/delete-account');?>" class="ajaxSoft"><i class="fa fa-fw fa-lg fa-trash-o"></i> <?php echo $this->lang->line('config_delete_account');?></a>
+							<li>
+								<a href="#delete-account-tab" data-toggle="tab"><i class="fa fa-fw fa-lg fa-trash-o"></i> <?php echo $this->lang->line('setting_delete_account');?></a>
 							</li>
 							<li class="pull-right">
 								<a href="javascript:void(0);">
@@ -87,37 +82,37 @@ the <section></section> and you can use wells or panels instead
 						</ul>
 
 						<div id="myTabContent1" class="tab-content padding-10">
-							<div class="tab-pane fade <?php if($filter_option == 'general') echo 'in active';?>" id="s1">
+							<div class="tab-pane fade in active" id="general-tab">
 								<?php echo form_open('auth/general_update/',array('id'=>'general_udate','class'=>'smart-form','enctype'=>'multipart/form-data', 'role'=>'form'));?>
 								
-								<legend><?php echo $this->lang->line("config_general_configuration"); ?></legend>
+								<legend><?php echo $this->lang->line("setting_general_configuration"); ?></legend>
 								<fieldset>	
 									<?php if($this->config->item('company_logo')) { 
 									echo '<img src="'. base_url().'/uploads/'.$this->license_id.'/logo/'.$this->config->item('company_logo').'" />';
 									} ?>
 									<section>
-										<label class="label"><?php echo $this->lang->line('config_business_logo');?></label>
+										<label class="label"><?php echo $this->lang->line('setting_business_logo');?></label>
 										<div class="input input-file">
 											<span class="button"><input type="file" id="logo" name="logo" onchange="this.parentNode.nextSibling.value = this.value">Browse</span><input type="text" readonly="">
 										</div>
 									</section>
 
 									<section>
-										<label class="label"><?php echo $this->lang->line('config_business_name'); ?></label>
+										<label class="label"><?php echo $this->lang->line('setting_business_name'); ?></label>
 										<label class="input">
 											<input type="text" name="business_name" id="business_name" value="<?php echo $this->config->item('business_name');?>" class=""/>
 										</label>
 									</section>
 									
 									<section>
-										<label class="label"><?php echo $this->lang->line('config_business_owner'); ?></label>
+										<label class="label"><?php echo $this->lang->line('setting_business_owner'); ?></label>
 										<label class="input">
 											<input type="text" name="business_owner" id="business_owner" value="<?php echo $this->config->item('business_owner');?>" class="form-control"/>
 										</label>
 									</section>
 									
 									<section>
-										<label class="label"><?php echo $this->lang->line('config_business_address'); ?></label>
+										<label class="label"><?php echo $this->lang->line('setting_business_address'); ?></label>
 										<label class="textarea textarea-resizable">
 											<textarea class="form-control" name="business_address" id="business_address" rows="3"><?php echo $this->config->item('business_address');?></textarea>
 										</label>
@@ -125,21 +120,21 @@ the <section></section> and you can use wells or panels instead
 									
 									<div class="row">
 										<section class="col col-4">
-											<label class="label"><?php echo $this->lang->line('config_business_phone'); ?></label>
+											<label class="label"><?php echo $this->lang->line('setting_business_phone'); ?></label>
 											<label class="input">
 												<input type="text" name="business_phone" id="business_phone" value="<?php echo $this->config->item('business_phone');?>" class="form-control"/>
 											</label>
 										</section>
 										
 										<section class="col col-4">
-											<label class="label"><?php echo $this->lang->line('config_business_email'); ?></label>
+											<label class="label"><?php echo $this->lang->line('setting_business_email'); ?></label>
 											<label class="input">
 												<input type="text" name="business_email" id="business_email" value="<?php echo $this->config->item('business_email');?>" class="form-control"/>
 											</label>
 										</section>
 										
 										<section class="col col-4">
-											<label class="label"><?php echo $this->lang->line('config_business_fax'); ?></label>
+											<label class="label"><?php echo $this->lang->line('setting_business_fax'); ?></label>
 											<label class="input">
 												<input type="text" name="business_fax" id="business_fax" value="<?php echo $this->config->item('business_fax');?>" class="form-control"/>
 											</label>
@@ -148,21 +143,21 @@ the <section></section> and you can use wells or panels instead
 									
 									<div class="row">
 										<section class="col col-4">
-											<label class="label"><?php echo $this->lang->line('config_prc'); ?></label>
+											<label class="label"><?php echo $this->lang->line('setting_prc'); ?></label>
 											<label class="input">
 												<input type="text" name="prc" id="prc" value="<?php echo $this->config->item('prc');?>" class="form-control"/>
 											</label>
 										</section>
 										
 										<section class="col col-4">
-											<label class="label"><?php echo $this->lang->line('config_ptr'); ?></label>
+											<label class="label"><?php echo $this->lang->line('setting_ptr'); ?></label>
 											<label class="input">
 												<input type="text" name="ptr" id="ptr" value="<?php echo $this->config->item('ptr');?>" class="form-control"/>
 											</label>
 										</section>
 										
 										<section class="col col-4">
-											<label class="label"><?php echo $this->lang->line('config_s2'); ?></label>
+											<label class="label"><?php echo $this->lang->line('setting_s2'); ?></label>
 											<label class="input">
 												<input type="text" name="s2" id="s2" value="<?php echo $this->config->item('s2');?>" class="form-control"/>
 											</label>
@@ -170,7 +165,7 @@ the <section></section> and you can use wells or panels instead
 									</div>
 									
 									<section class="hidden">
-										<label class="label"><?php echo $this->lang->line('config_lines_per_page'); ?></label>
+										<label class="label"><?php echo $this->lang->line('setting_lines_per_page'); ?></label>
 										<label class="input">
 											<input type="text" name="lines_per_page" id="lines_per_page" value="<?php echo $this->config->item('lines_per_page');?>" class="form-control"/>
 										</label>
@@ -178,13 +173,13 @@ the <section></section> and you can use wells or panels instead
 									
 									<div class="row">
 										<section class="col col-6">
-											<label class="label"><?php echo $this->lang->line('config_week_day_morning_open'); ?></label>
+											<label class="label"><?php echo $this->lang->line('setting_week_day_morning_open'); ?></label>
 											<label class="input"> 
 												<input type="text" name="morning_open_time" id="morning_open_time" value="<?php echo $this->config->item('morning_open_time');?>" class="form-control timepicker timepicker-no-seconds">
 											</label>
 										</section>
 										<section class="col col-6">
-											<label class="label"><?php echo $this->lang->line('config_week_day_morning_close'); ?></label>
+											<label class="label"><?php echo $this->lang->line('setting_week_day_morning_close'); ?></label>
 											<label class="input"> 
 												<input type="text" name="morning_close_time" id="morning_close_time" value="<?php echo $this->config->item('morning_close_time');?>" class="form-control timepicker timepicker-no-seconds">
 											</label>
@@ -193,13 +188,13 @@ the <section></section> and you can use wells or panels instead
 									
 									<div class="row">
 										<section class="col col-6">
-											<label class="label"><?php echo $this->lang->line('config_week_day_afternoon_open'); ?></label>
+											<label class="label"><?php echo $this->lang->line('setting_week_day_afternoon_open'); ?></label>
 											<label class="input"> 
 												<input type="text" name="afternoon_open_time" id="afternoon_open_time" value="<?php echo $this->config->item('afternoon_open_time');?>" class="form-control timepicker timepicker-no-seconds">
 											</label>
 										</section>
 										<section class="col col-6">
-											<label class="label"><?php echo $this->lang->line('config_week_day_afternoon_close'); ?></label>
+											<label class="label"><?php echo $this->lang->line('setting_week_day_afternoon_close'); ?></label>
 											<label class="input"> 
 												<input type="text" name="afternoon_close_time" id="afternoon_close_time" value="<?php echo $this->config->item('afternoon_close_time');?>" class="form-control timepicker timepicker-no-seconds">
 											</label>
@@ -208,13 +203,13 @@ the <section></section> and you can use wells or panels instead
 									
 									<div class="row">
 										<section class="col col-6">
-											<label class="label"><?php echo $this->lang->line('config_week_end_open'); ?></label>
+											<label class="label"><?php echo $this->lang->line('setting_week_end_open'); ?></label>
 											<label class="input"> 
 												<input type="text" name="week_end_open_time" id="week_end_open_time" value="<?php echo $this->config->item('week_end_open_time');?>" class="form-control timepicker timepicker-no-seconds">
 											</label>
 										</section>
 										<section class="col col-6">
-											<label class="label"><?php echo $this->lang->line('config_week_end_close'); ?></label>
+											<label class="label"><?php echo $this->lang->line('setting_week_end_close'); ?></label>
 											<label class="input"> 
 												<input type="text" name="week_end_close_time" id="week_end_close_time" value="<?php echo $this->config->item('week_end_close_time');?>" class="form-control timepicker timepicker-no-seconds">
 											</label>
@@ -222,11 +217,11 @@ the <section></section> and you can use wells or panels instead
 									</div>
 
 								</fieldset>
-								<legend><?php echo $this->lang->line('config_locale_configuration'); ?></legend>
+								<legend><?php echo $this->lang->line('setting_locale_configuration'); ?></legend>
 								<fieldset>
 									<div class="row">
 										<section class="col col-6">
-											<label class="label"><?php echo $this->lang->line('config_language'); ?></label>
+											<label class="label"><?php echo $this->lang->line('setting_language'); ?></label>
 											<label class="select">
 												<?php echo form_dropdown('language', array(
 												'english' => $this->lang->line('common_english')
@@ -237,7 +232,7 @@ the <section></section> and you can use wells or panels instead
 										</section>
 										
 										<section class="col col-6">
-											<label class="label"><?php echo $this->lang->line('config_timezone'); ?></label>
+											<label class="label"><?php echo $this->lang->line('setting_timezone'); ?></label>
 											<label class="select">
 												<?php echo form_dropdown('timezone', 
 											 array(
@@ -348,13 +343,13 @@ the <section></section> and you can use wells or panels instead
 							</form>
 							<!-- END FORM-->
 							</div>
-							<div class="tab-pane fade <?php if($filter_option == 'email') echo 'in active';?>" id="s2">
-								<p><?php echo $this->lang->line('config_send_email_to');?> : <code><?php echo $user_info->email;?></code></p>
+							<div class="tab-pane fade" id="email-tab">
+								<p><?php echo $this->lang->line('setting_send_email_to');?> : <code><?php echo $user_info->email;?></code></p>
 
 								<?php echo form_open('auth/notification_update','class="smart-form" id="notification_udate"');?>
 									
 										<legend>
-											<?php echo $this->lang->line('config_updates');?>
+											<?php echo $this->lang->line('setting_updates');?>
 										</legend>
 										<label class="checkbox">
 											<input type="checkbox" name="notifications[]" value="updates" <?php if($this->Common->has_permission('updates', $this->user_id)) echo 'checked';?>>
@@ -362,11 +357,11 @@ the <section></section> and you can use wells or panels instead
 										</label>
 									
 										<!--<legend>
-											<?php echo $this->lang->line('config_message');?>
+											<?php echo $this->lang->line('setting_message');?>
 										</legend>
 										<label class="checkbox">
 											<input type="checkbox" name="notifications[]" value="new_message" <?php if($this->Common->has_permission('new_message', $this->user_id)) echo 'checked';?>>
-											<i></i><?php echo $this->lang->line('config_new_message');?>
+											<i></i><?php echo $this->lang->line('setting_new_message');?>
 										</label>
 										<label class="checkbox">
 											<input type="checkbox" name="notifications[]" value="private_message" <?php if($this->Common->has_permission('private_message', $this->user_id)) echo 'checked';?>>
@@ -374,28 +369,28 @@ the <section></section> and you can use wells or panels instead
 										</label>
 									
 										<legend>
-											<?php echo $this->lang->line('config_friends');?>
+											<?php echo $this->lang->line('setting_friends');?>
 										</legend>
 										<label class="checkbox">
 											<input type="checkbox" name="notifications[]" value="friends_sends" <?php if($this->Common->has_permission('friends_sends', $this->user_id)) echo 'checked';?>>
-											<i></i><?php echo $this->lang->line('config_sends_friend_request');?>
+											<i></i><?php echo $this->lang->line('setting_sends_friend_request');?>
 										</label>-->
 
 									
 										<legend>
-											<?php echo $this->lang->line('config_appointments');?>
+											<?php echo $this->lang->line('setting_appointments');?>
 										</legend>
 										<label class="checkbox">
 											<input type="checkbox" name="notifications[]" value="new_appointments" <?php if($this->Common->has_permission('new_appointments', $this->user_id)) echo 'checked';?>>
-											<i></i><?php echo $this->lang->line('config_new_appointments');?>
+											<i></i><?php echo $this->lang->line('setting_new_appointments');?>
 										</label>
 										<label class="checkbox">
 											<input type="checkbox" name="notifications[]" value="cancel_appointments" <?php if($this->Common->has_permission('cancel_appointments', $this->user_id)) echo 'checked';?>>
-											<i></i><?php echo $this->lang->line('config_cancel_appointments');?>
+											<i></i><?php echo $this->lang->line('setting_cancel_appointments');?>
 										</label>
 									
 										<!--<legend>
-											<?php echo $this->lang->line('config_group');?>
+											<?php echo $this->lang->line('setting_group');?>
 										</legend>
 										<label class="checkbox">
 											<input type="checkbox" name="notifications[]" value="groups_invite" <?php if($this->Common->has_permission('groups_invite', $this->user_id)) echo 'checked';?>>
@@ -403,7 +398,7 @@ the <section></section> and you can use wells or panels instead
 										</label>
 									
 										<legend>
-											<?php echo $this->lang->line('config_others');?>
+											<?php echo $this->lang->line('setting_others');?>
 										</legend>
 										<label class="checkbox">
 											<input type="checkbox" name="notifications[]" value="wall_post" <?php if($this->Common->has_permission('wall_post', $this->user_id)) echo 'checked';?>>
@@ -440,50 +435,29 @@ the <section></section> and you can use wells or panels instead
 								</form>
 
 							</div>
-							<div class="tab-pane fade <?php if($filter_option == 'profile-visibility') echo 'in active';?>" id="s3">
+							<div class="tab-pane fade" id="visibility-tab">
 								<p>
-									<?php echo $this->lang->line('config_your_account_is_currently');?> : <code><?php echo ($user_info->type == 0) ? $this->lang->line('config_public') : $this->lang->line('config_private');?></code>
+									<?php echo $this->lang->line('setting_your_account_is_currently');?> : <code><?php echo ($user_info->type == 0) ? $this->lang->line('setting_public') : $this->lang->line('setting_private');?></code>
 								</p>
 
 								<?php echo form_open('auth/update_type','class="smart-form" id="profile_update"');?>
 									
 										<legend>
-											<?php echo $this->lang->line('config_profile_visibility');?>
+											<?php echo $this->lang->line('setting_profile_visibility');?>
 										</legend>
 										<label class="checkbox">
 											<input type="checkbox" name="profile_visibility" value="1" <?php if($user_info->type == 1) echo 'checked';?>>
-											<i></i><?php echo $this->lang->line('config_make_my_profile_private');?>
+											<i></i><?php echo $this->lang->line('setting_make_my_profile_private');?>
 										</label>
 										<button type="submit" id="profile-submit" class="btn btn-primary btn-sm"><?php echo $this->lang->line('common_update');?></button>
 									
 								</form>
 							</div>
 							
-							<div class="tab-pane fade <?php if($filter_option == 'templates') echo 'in active';?>" id="s3">
+												
+							<div class="tab-pane fade" id="delete-account-tab">
 								<p>
-									Templates <?php //echo $this->lang->line('config_your_account_is_currently');?> : <code>All templates can be customize. Just clone the template and create new with your design.</code>
-								</p>
-
-								<?php echo form_open('auth/update_templates','class="form-horizontal" id="template_update"');?>
-									
-										<legend>
-											Setup Default Templates <?php //echo $this->lang->line('config_profile_visibility');?>
-										</legend>
-										<div class="form-group">
-											<label class="control-label col-md-3">RX Pad <?php //echo $this->lang->line('config_language'); ?>
-											</label>
-											<div class="col-md-4">
-												<?php echo form_dropdown('rx_template', $templates, $this->config->item('rx_template'),'class="form-control" id="rx_template"');?>
-											</div>
-										</div>
-										<button type="submit" id="template-submit" class="btn btn-primary btn-sm"><?php echo $this->lang->line('common_update');?></button>
-									
-								</form>
-							</div>
-							
-							<div class="tab-pane fade <?php if($filter_option == 'delete-account') echo 'in active';?>" id="s4">
-								<p>
-									<?php echo $this->lang->line('config_confirmation');?> <code><?php echo $this->lang->line('config_note');?></code>
+									<?php echo $this->lang->line('setting_confirmation');?> <code><?php echo $this->lang->line('config_note');?></code>
 								</p>
 								<a href="<?php echo site_url('auth/delete');?>" id="delete-account" class="btn btn-danger btn-lg"><?php echo $this->lang->line('common_delete_my_account');?></a>
 							</div>

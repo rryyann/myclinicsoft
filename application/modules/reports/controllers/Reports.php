@@ -22,14 +22,11 @@ class Reports extends Secure {
         $this->display_error_log($directory,$class_name,$method);
     }
 
-    private function _init()
+    private function _init($data)
 	{
 		
 		$this->template
-			->title('Patients') //$article->title
-			->prepend_metadata('<script src="/js/jquery.js"></script>')
-			->append_metadata('<script src="/js/jquery.flot.js"></script>')
-			// application/views/some_folder/header
+			->title(get_class($this)) //$article->title
 			->set_partial('header', 'include/header') //third param optional $data
 			->set_partial('sidebar', 'include/sidebar') //third param optional $data
 			->set_partial('ribbon', 'include/ribbon') //third param optional $data
@@ -39,21 +36,23 @@ class Reports extends Secure {
 			// application/views/some_folder/header
 			//->inject_partial('header', '<h1>Hello World!</h1>')  //third param optional $data
 			->set_layout('full-column') // application/views/layouts/two_col.php
-			->build('manage'); // views/welcome_message);
+			->build('manage', $data); // views/welcome_message);
 		
 	}
 
 	function index()
 	{
-		// $this->output->set_common_meta(get_class(), 'description', 'keyword');
+		$this->load->model('Report');
+		
+		$data['module'] = get_class();
 		if ($this->input->is_ajax_request()) 
 		{
-			$data['module'] = get_class();
-			$this->load->view('ajax/reports', $data);
+			
+			$this->load->view('manage', $data);
         } 
 		else
 		{
-			$this->_init();
+			$this->_init($data);
 		}
 	}
 	

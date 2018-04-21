@@ -25,11 +25,11 @@ div#complain-table .btn-group {
 		<img src="<?php echo $img;?>" class="img-responsive pull-left" >
 	
 		<h1 class="page-title txt-color-blueDark"><!-- PAGE HEADER --><?php echo $info->firstname.', '.$info->lastname. ' [ '.ucfirst(str_replace('_', ' ', $type)).' Record ]';?> </h1>
-		<span><?php if($this->Que->exists($info->id, $this->license_id)){ echo 'QUE # : '. $this->Que->get_info($info->id, $this->license_id)->que_id.'</span>'; }?>
+		<span><?php if($this->Queing->exists($info->id, $this->license_id)){ echo 'QUE # : '. $this->Queing->get_info($info->id, $this->license_id)->que_id.'</span>'; }?>
 	</div>
 	<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-		<?php if(!$this->Que->exists($info->id, $this->license_id)){ ?>
-			<a href="<?php echo site_url('queing/move_in/'.$info->id);?>" class="move-in btn btn-primary"><i class="fa fa-sign-in fa-fw"></i> Move in to waiting list!</a>
+		<?php if(!$this->Queing->exists($info->id, $this->license_id)){ ?>
+			<a href="<?php echo site_url('queings/move_in/'.$info->id);?>" class="move-in btn btn-primary"><i class="fa fa-sign-in fa-fw"></i> Move in to waiting list!</a>
 		<?php }else{ ?>
 			<a href="javascript:;" id="<?php echo $info->id;?>" class="move-out btn btn-danger"><i class="fa fa-sign-out fa-fw"></i> Move out to waiting list!</a>
 		<?php } ?>
@@ -824,7 +824,7 @@ the <section></section> and you can use wells or panels instead
 										'<label class="prep">'+v.preparation+'</label> '+
 										'<label class="sig">'+v.sig+'</label>'+
 										'<label class="qty"># '+v.qty+'</span></label>'+
-										'<label class="print-action"><a title="Rx Preview" href="'+BASE_URL+'queing/preview/'+ user_id +'/'+v.date+'/yes" class="ajax-btn btn btn-success btn-xs" ><i class="fa fa-eye"></i> Rx Preview</a></label>'+
+										'<label class="print-action"><a title="Rx Preview" href="'+BASE_URL+'queings/preview/'+ user_id +'/'+v.date+'/yes" class="ajax-btn btn btn-success btn-xs" ><i class="fa fa-eye"></i> Rx Preview</a></label>'+
 									'</li>';
 						}else{
 							item += '<li class="list-group-item onece">'+
@@ -833,7 +833,7 @@ the <section></section> and you can use wells or panels instead
 										'<label class="prep">'+v.preparation+'</label> '+
 										'<label class="sig">'+v.sig+'</label>'+
 										'<label class="qty"># '+v.qty+'</span></label>'+
-										'<label class="print-action"><a title="Rx Preview" href="'+BASE_URL+'queing/preview/'+ user_id +'/'+v.date+'/no" class="ajax-btn btn btn-success btn-xs" ><i class="fa fa-eye"></i> Rx Preview</a></label>'+
+										'<label class="print-action"><a title="Rx Preview" href="'+BASE_URL+'queings/preview/'+ user_id +'/'+v.date+'/no" class="ajax-btn btn btn-success btn-xs" ><i class="fa fa-eye"></i> Rx Preview</a></label>'+
 									'</li>';
 						}
 						
@@ -870,7 +870,7 @@ the <section></section> and you can use wells or panels instead
 		        }
 		        
 		        $.ajax({
-				url: BASE_URL +'queing/move_out/'+id+'/'+status,
+				url: BASE_URL +'queings/move_out/'+id+'/'+status,
 				type: 'POST',
 				beforeSend: function () {
 					$(this).html('Please wait...');

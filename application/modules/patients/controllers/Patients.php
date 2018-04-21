@@ -5,8 +5,11 @@ class Patients extends Secure {
 
 	function __construct() {
         parent::__construct();
-		// $this->load->helper('encrpt');
-		// $this->load->library('encrypt');
+		$this->load->helper('encode');
+		$this->load->model('Patient');
+
+		$this->load->language('patients', 'english');
+        $this->load->language('common/common', 'english');
     }
 
     function _remap($method, $params = array()) {
@@ -20,38 +23,34 @@ class Patients extends Secure {
         $this->display_error_log($directory,$class_name,$method);
     }
 
-    private function _init()
+    private function _init($data)
 	{
 		
 		$this->template
-			->title('Patients') //$article->title
-			->prepend_metadata('<script src="/js/jquery.js"></script>')
-			->append_metadata('<script src="/js/jquery.flot.js"></script>')
-			// application/views/some_folder/header
+			->title(get_class($this)) //$article->title
 			->set_partial('header', 'include/header') //third param optional $data
 			->set_partial('sidebar', 'include/sidebar') //third param optional $data
-			->set_partial('ribbon', 'include/ribbon') //third param optional $data
+			->set_partial('ribbon', 'include/ribbon', $data) //third param optional $data
 			->set_partial('footer', 'include/footer') //third param optional $data
 			->set_partial('shortcut', 'include/shortcut') //third param optional $data
 			->set_metadata('author', 'Randy Rebucas')
 			// application/views/some_folder/header
 			//->inject_partial('header', '<h1>Hello World!</h1>')  //third param optional $data
 			->set_layout('full-column') // application/views/layouts/two_col.php
-			->build('manage'); // views/welcome_message);
+			->build('manage', $data); // views/welcome_message);
 		
 	}
 
 	function index()
 	{
-
+		$data['module'] = get_class();
 		if ($this->input->is_ajax_request()) 
 		{
-			$data['module'] = get_class();
-			$this->load->view('ajax/patients', $data);
+			$this->load->view('manage', $data);
         } 
 		else
 		{
-			$this->_init();
+			$this->_init($data);
 		}
 	}
 
@@ -83,8 +82,10 @@ class Patients extends Secure {
     }
 	
    function view($id = -1){
+   	
         if ($this->input->is_ajax_request()) 
 		{
+			$this->load->model('roles/Role');
 	        $data['info'] = $this->Patient->get_info($id);
 			
 			$roles = array('' => 'Select');
@@ -94,7 +95,8 @@ class Patients extends Secure {
 			}
 			$data['roles'] = $roles;
 			$data['option'] = $this->session->userdata('option');
-	        $this->load->view("ajax/patients_form", $data);
+
+	        $this->load->view("form", $data);
 	    }else{
 	    	$this->session->set_flashdata('alert_error', 'Sorry! Page cannot open by new tab');
             redirect('');
@@ -195,6 +197,7 @@ class Patients extends Secure {
     }
 
     function details($id = -1){
+    	
     	if ($this->input->is_ajax_request()) 
 		{
 	    	$data['info'] = $this->Patient->get_profile_info($id);
@@ -207,12 +210,12 @@ class Patients extends Secure {
 	
 	function encode($type, $id){
 	
-		// redirect('patients/records/'.$type.'/'.$this->encrypt->encode($id));
+		redirect('patients/records/'.$type.'/'.url_base64_encode($id));
 	}
 	
 	function decoded($type, $id){
 
-		// redirect('patients/records/'.$type.'/'.$this->encrypt->encode($id));
+		redirect('patients/records/'.$type.'/'.url_base64_encode($id));
 		
 	}
 	
@@ -221,10 +224,16 @@ class Patients extends Secure {
 		if($id == ''){
 			redirect('patients/decoded/summary/'.$id);
 		}
+
+		$this->load->model('queings/Queing');
+		$this->load->model('records/Record');
+
+		$data['module'] = 'Patient Records';
+		
 		if ($this->input->is_ajax_request()) 
 		{
-			// $patient_id = $this->encrypt->decode($id);
-			$data['module'] = 'Patient Records';
+			$patient_id = url_base64_decode($id);
+			
 			$data['type'] = $type; 
 			$data['info'] = $this->Patient->get_profile_info($patient_id);
 			
@@ -232,15 +241,18 @@ class Patients extends Secure {
         } 
 		else
 		{
-			$this->_init();
+			$this->_init($data);
 		}
 	}
 	
 	function get_record(){
 		if ($this->input->is_ajax_request()) 
 		{
+			$this->load->model('records/Record');
+
 			$type = $this->input->post('type');
-			// $data['id'] = $this->encrypt->decode($this->input->post('id'));
+			$data['id'] = url_base64_decode($this->input->post('id'));
+
 			$data['type'] = $type;
 			$data['latest'] = $this->Record->get_current_data($type, $data['id'], date('Y-m-d'));
 			$data['pr_result'] = $this->Record->get_all_data($type, $data['id'], 'no');//segment 3 
@@ -253,8 +265,10 @@ class Patients extends Secure {
 	function get_record_files(){
 		if ($this->input->is_ajax_request()) 
 		{
+			$this->load->model('records/Record');
+
 			$type = $this->input->post('type');
-			// $data['id'] = $this->encrypt->decode($this->input->post('id'));
+			$data['id'] = url_base64_decode($this->input->post('id'));
 			$data['type'] = $type;
 			$data['latest'] = $this->Record->get_current_data($type, $data['id'], date('Y-m-d'));
 			$data['result'] = $this->Record->get_all_file_data($type, $data['id']);//segment 3 

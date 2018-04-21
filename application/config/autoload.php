@@ -65,15 +65,9 @@ $autoload['libraries'] = array(
 	'form_validation',
 	'session',
 	'user_agent', 
-	//'pagination', 
-	// 'tank_auth',
-	//'twilio_lib',
 	'location_lib',
 	'gravatar',
-	// 'encrypt',
 	'template'
-	//'dynamic_menu',
-	//'pass_secured'
 );
 /*
 | -------------------------------------------------------------------
@@ -103,8 +97,7 @@ $autoload['helper'] = array(
 	'form',
 	'url',
 	'security',
-	'text',
-	//'currency', 
+	'text', 
 	'html', 
 	'string',
 	'download', 
@@ -156,17 +149,4 @@ $autoload['language'] = array('_');
 |	$autoload['model'] = array('first_model' => 'first');
 */
 
-$autoload['model'] = array(
-	'Appconfig', 
-	'Person', 
-	'Role', 
-	'Common', 
-	'Patient', 
-	'Record', 
-	'Module', 
-	'Que', 
-	'Medication', 
-	'Forms', 
-	'Report', 
-	'Appointment'
-);
+$autoload['model'] = array();

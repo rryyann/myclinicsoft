@@ -4,35 +4,14 @@ function load_config()
 {
     $CI =& get_instance();
 
+    $CI->load->model('settings/Setting');
     $CI->load->library('auth/tank_auth');
-    foreach( $CI->Appconfig->get_all($CI->tank_auth->get_license_key())->result() as $app_config )
+
+    foreach( $CI->Setting->get_all($CI->tank_auth->get_license_key())->result() as $app_config )
     {
         $CI->config->set_item( $app_config->key, $app_config->value );
     }
     
-    //Set language from config database
-    //Loads all the language files from the language directory
-    
-    if ( $CI->config->item( 'language' ) )
-    {
-        $CI->config->set_item( 'language', $CI->config->item( 'language' ) );
-		// fallback to english if language folder does not exist        
-		$language = $CI->config->item( 'language' );
-        if (!file_exists('./application/language/' . $language)) 
-        {
-        	$language = 'english';
-        }
-
-        $map = directory_map('./application/language/' . $language);
-        foreach($map as $file)
-        {
-            if ( !is_array($file) && substr(strrchr($file,'.'), 1) == "php")
-            {
-                $CI->lang->load( str_replace( '_lang.php', '', $file ),  $language);    
-            }
-        }
-        
-    }
     
     //Set timezone from config database
     if ( $CI->config->item( 'timezone' ) )

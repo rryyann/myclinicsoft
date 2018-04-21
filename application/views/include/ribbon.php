@@ -8,7 +8,7 @@
 
 	<!-- breadcrumb -->
 	<ol class="breadcrumb">
-		<li>Dashboard</li>
+		<li><?php echo $module;?></li>
 	</ol>
 	<!-- end breadcrumb -->
 	

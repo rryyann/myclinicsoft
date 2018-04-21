@@ -10,7 +10,7 @@ var mcs = (function() {
 			var xcounts = $('span#running-que-counts').html();
 			
 			$.ajax({
-				url: BASE_URL+'queing/get_counts',
+				url: BASE_URL+'queings/get_counts',
 				type: 'post',   
 				dataType: 'json',
 				success: function (res) {
@@ -29,7 +29,7 @@ var mcs = (function() {
 		
 		function que_counts(){
 			$.ajax({
-				url: BASE_URL+'queing/get_counts',
+				url: BASE_URL+'queings/get_counts',
 				type: 'post',   
 				dataType: 'json',
 				success: function (res) {
@@ -42,7 +42,7 @@ var mcs = (function() {
 		
 		function que_get(){
 			$.ajax({
-				url: BASE_URL+'queing/get_in',
+				url: BASE_URL+'queings/get_in',
 				type: 'post',   
 				dataType: 'html',
 				beforeSend: function () {
@@ -151,7 +151,7 @@ var mcs = (function() {
 											'<label class="prep">'+v.preparation+'</label> '+
 											'<label class="sig">'+v.sig+'</label>'+
 											'<label class="qty"># '+v.qty+'</span></label>'+
-											'<label class="print-action"><a title="Rx Preview" href="'+BASE_URL+'queing/preview/'+ user_id +'/'+v.date+'/yes" class="ajax-btn btn btn-success btn-xs" ><i class="fa fa-print"></i> Print</a></label>'+
+											'<label class="print-action"><a title="Rx Preview" href="'+BASE_URL+'queings/preview/'+ user_id +'/'+v.date+'/yes" class="ajax-btn btn btn-success btn-xs" ><i class="fa fa-print"></i> Print</a></label>'+
 										'</li>';
 							}else{
 								item += '<li class="list-group-item onece">'+
@@ -160,7 +160,7 @@ var mcs = (function() {
 											'<label class="prep">'+v.preparation+'</label> '+
 											'<label class="sig">'+v.sig+'</label>'+
 											'<label class="qty"># '+v.qty+'</span></label>'+
-											'<label class="print-action"><a title="Rx Preview" href="'+BASE_URL+'queing/preview/'+ user_id +'/'+v.date+'/no" class="ajax-btn btn btn-success btn-xs" ><i class="fa fa-print"></i> Print</a></label>'+
+											'<label class="print-action"><a title="Rx Preview" href="'+BASE_URL+'queings/preview/'+ user_id +'/'+v.date+'/no" class="ajax-btn btn btn-success btn-xs" ><i class="fa fa-print"></i> Print</a></label>'+
 										'</li>';
 							}
 							

@@ -5,7 +5,7 @@ class Templates extends Secure {
 
 	function __construct() {
         parent::__construct();
-       
+        $this->load->model('Template');
     }
 
     function _remap($method, $params = array()) {
@@ -23,10 +23,8 @@ class Templates extends Secure {
 	{
 		
 		$this->template
-			->title('Patients') //$article->title
-			->prepend_metadata('<script src="/js/jquery.js"></script>')
-			->append_metadata('<script src="/js/jquery.flot.js"></script>')
-			// application/views/some_folder/header
+			->title(get_class($this)) //$article->title
+
 			->set_partial('header', 'include/header') //third param optional $data
 			->set_partial('sidebar', 'include/sidebar') //third param optional $data
 			->set_partial('ribbon', 'include/ribbon') //third param optional $data
@@ -42,15 +40,15 @@ class Templates extends Secure {
 
 	function index()
 	{
-		// $this->output->set_common_meta('Templates', 'description', 'keyword');
+		$data['module'] = 'Templates';
 		if ($this->input->is_ajax_request()) 
 		{
-			$data['module'] = 'Templates';
-			$this->load->view('ajax/templates', $data);
+			
+			$this->load->view('manage', $data);
         } 
 		else
 		{
-			$this->_init();
+			$this->_init($data);
 			
 		}
 	}
@@ -75,21 +73,22 @@ class Templates extends Secure {
     }
 	
 	function view($id = -1){
+
         if ($this->input->is_ajax_request()) 
 		{
-
+			
 			$data['info'] = $this->Template->get_info($id);
 			
 			$templates = array('' => 'Select');
-			$array = array($this->license_id, 'system');
+			// $array = array($this->license_id, 'system');
 
-			foreach ($this->Template->get_all($array)->result_array() as $row) {
-				$templates[$row['tid']] = $row['tname'];
-			}
+			// foreach ($this->Template->get_all($array)->result_array() as $row) {
+			// 	$templates[$row['tid']] = $row['tname'];
+			// }
 
 			$data['templates'] = $templates;
 			
-	        $this->load->view("ajax/templates_form", $data);
+	        $this->load->view("form", $data);
 	    }else{
 	    	$this->session->set_flashdata('alert_error', 'Sorry! Page cannot open by new tab');
             redirect('');
@@ -138,7 +137,7 @@ class Templates extends Secure {
     	if ($this->input->is_ajax_request()) 
 		{
 	    	$data['info'] = $this->Template->get_info($id);
-	        $this->load->view("ajax/templates_detail", $data);
+	        $this->load->view("detail", $data);
 	    }else{
 	    	$this->session->set_flashdata('alert_error', 'Sorry! Page cannot open by new tab');
             redirect('');

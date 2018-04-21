@@ -5,7 +5,7 @@ class Appointments extends Secure {
 
 	function __construct() {
         parent::__construct();
-       
+        $this->load->model('Appointment');
     }
 
     function _remap($method, $params = array()) {
@@ -19,38 +19,35 @@ class Appointments extends Secure {
         $this->display_error_log($directory,$class_name,$method);
     }
 
-    private function _init()
+    private function _init($data)
 	{
 		
 		$this->template
-			->title('Patients') //$article->title
-			->prepend_metadata('<script src="/js/jquery.js"></script>')
-			->append_metadata('<script src="/js/jquery.flot.js"></script>')
+			->title(get_class($this)) //$article->title
 			// application/views/some_folder/header
 			->set_partial('header', 'include/header') //third param optional $data
 			->set_partial('sidebar', 'include/sidebar') //third param optional $data
-			->set_partial('ribbon', 'include/ribbon') //third param optional $data
+			->set_partial('ribbon', 'include/ribbon', $data) //third param optional $data
 			->set_partial('footer', 'include/footer') //third param optional $data
 			->set_partial('shortcut', 'include/shortcut') //third param optional $data
 			->set_metadata('author', 'Randy Rebucas')
-			// application/views/some_folder/header
 			//->inject_partial('header', '<h1>Hello World!</h1>')  //third param optional $data
 			->set_layout('full-column') // application/views/layouts/two_col.php
-			->build('manage'); // views/welcome_message);
+			->build('manage', $data); // views/welcome_message);
 		
 	}
 
 	function index()
 	{
-		// $this->output->set_common_meta('Appointments', 'description', 'keyword');
+		$data['module'] = 'Appointments';
 		if ($this->input->is_ajax_request()) 
 		{
-			$data['module'] = 'Appointments';
-			$this->load->view('ajax/appointments', $data);
+			
+			$this->load->view('manage', $data);
         } 
 		else
 		{
-			$this->_init();
+			$this->_init($data);
 			
 		}
 	}
@@ -59,33 +56,11 @@ class Appointments extends Secure {
 		echo json_encode($this->Appointment->get_all($this->license_id)->result_array());
 	}
 	
-	function load_ajax() {
-	
-		if ($this->input->is_ajax_request()) 
-		{	
-			$this->load->library('datatables');
-	       
-	        $this->datatables->select("a.app_id as id,  schedule_date,  schedule_time, patient_name, CONCAT(IF(ups.lastname != '', ups.lastname, ''),',',IF(ups.firstname != '', ups.firstname, '')) as doctor_fullname, title, status, a.license_key as license", false);
-	        
-			if($this->admin_role_id == $this->role_id){
-				$this->datatables->where('a.license_key', $this->license_id);
-			}else{
-				$this->datatables->where('a.user_id', $this->user_id);
-			}
-
-			$this->datatables->join('users_subscriptions_plan as usp', 'a.license_key = usp.license_key', 'left', false);
-			$this->datatables->join('users_profiles as ups', 'usp.user_id = ups.user_id', 'left', false);
-			
-	        $this->datatables->from('appoinments as a');
-
-	        echo $this->datatables->generate('json', 'UTF-8');
-    	}else{
-	    	$this->session->set_flashdata('alert_error', 'Sorry! Page cannot open by new tab');
-            redirect('');
-	    }
-    }
-	
 	function view($id = -1){
+
+		$this->load->model('common/Common');
+		$this->load->model('patients/Patient');
+
         if ($this->input->is_ajax_request()) 
 		{
 
@@ -105,7 +80,7 @@ class Appointments extends Secure {
 			}
 			$data['patients'] = $patients;
 			
-	        $this->load->view("ajax/appointments_form", $data);
+	        $this->load->view("form", $data);
 			
 	    }else{
 	    	$this->session->set_flashdata('alert_error', 'Sorry! Page cannot open by new tab');
@@ -146,14 +121,17 @@ class Appointments extends Secure {
 	}
 	
 	function details($id = -1){
+
     	if ($this->input->is_ajax_request()) 
 		{
+			$this->load->model('common/Common');
+			$this->load->model('patients/Patient');
+
 	    	$data['info'] = $this->Appointment->get_info($id);
 			$data['client_id'] = $this->Common->get_subscription_info($data['info']->license_key);
-			//$data['patient_info'] = $this->Patient->get_info($data['info']->user_id);
 			$data['client_info'] = $this->Patient->get_info($data['client_id']->user_id);
 			
-	        $this->load->view("ajax/appointments_detail", $data);
+	        $this->load->view("detail", $data);
 	    }else{
 	    	$this->session->set_flashdata('alert_error', 'Sorry! Page cannot open by new tab');
             redirect('');

@@ -5,7 +5,8 @@ class Dashboard extends Secure {
 
 	function __construct() {
         parent::__construct();
-
+        $this->load->language('dashboard', 'english');
+        $this->load->language('posts/posts', 'english');
     }
 
     function _remap($method, $params = array()) {
@@ -19,17 +20,15 @@ class Dashboard extends Secure {
         $this->display_error_log($directory,$class_name,$method);
     }
 
-    private function _init()
+    private function _init($data)
 	{
 		
 		$this->template
-			->title('Dashboard') //$article->title
-			->prepend_metadata('<script src="/js/jquery.js"></script>')
-			->append_metadata('<script src="/js/jquery.flot.js"></script>')
+			->title(get_class($this)) //$article->title
 			// application/views/some_folder/header
 			->set_partial('header', 'include/header') //third param optional $data
-			->set_partial('sidebar', 'include/sidebar') //third param optional $data
-			->set_partial('ribbon', 'include/ribbon') //third param optional $data
+			->set_partial('sidebar', 'include/sidebar', $data) //third param optional $data
+			->set_partial('ribbon', 'include/ribbon', $data) //third param optional $data
 			->set_partial('footer', 'include/footer') //third param optional $data
 			->set_partial('shortcut', 'include/shortcut') //third param optional $data
 			->set_metadata('author', 'Randy Rebucas')
@@ -41,17 +40,15 @@ class Dashboard extends Secure {
 
 	function index()
 	{
+		$data['module'] = get_class();
+
 		if ($this->input->is_ajax_request()) 
 		{
-			$data['module'] = get_class();
-			
-			$this->load->view('ajax/dashboard', $data);
+			$this->load->view('manage', $data);
         } 
 		else
 		{
-			$this->_init();
-			$this->template->set_metadata('keyword', 'Randy Rebucas');
-			$this->template->set_metadata('description', 'Randy Rebucas');
+			$this->_init($data);
 		}
 		
 	}

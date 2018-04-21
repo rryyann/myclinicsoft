@@ -201,7 +201,7 @@ $config['composer_autoload'] = FCPATH.'vendor/autoload.php';
 | DO NOT CHANGE THIS UNLESS YOU FULLY UNDERSTAND THE REPERCUSSIONS!!
 |
 */
-$config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-';
+ $config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-';
 
 /*
 |--------------------------------------------------------------------------
@@ -258,7 +258,7 @@ $config['directory_trigger'] = 'd';
 | your log files will fill up very fast.
 |
 */
-$config['log_threshold'] = 1;
+$config['log_threshold'] = 0;
 
 /*
 |--------------------------------------------------------------------------

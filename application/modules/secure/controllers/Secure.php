@@ -20,8 +20,11 @@ class Secure extends CI_Controller {
         $this->load->library('auth/tank_auth');
         $this->load->model('user/User_model');
         $this->load->model('roles/Role');
-        // $module_id = uri_string();
-		//$this->permission_check($module_id, 'view');
+        $this->load->model('settings/Setting');
+        $this->load->model('modules/Module');
+        $this->load->model('common/Common');
+
+		$this->permission_check(uri_string(), 'view');
 		
 		$this->role_id = $this->tank_auth->get_role_id();
         $this->license_id = $this->tank_auth->get_license_key();
@@ -33,27 +36,27 @@ class Secure extends CI_Controller {
 		
 		$this->admin_role_id = $this->Role->get_default_role(2, $this->license_id);
 		$this->patient_role_id = $this->Role->get_default_patient_role($this->license_id);
-		//$this->company_info = $this->Common->get_subscription_info($this->license_id);
-		//$this->subscription_counts = $this->check_subscription($this->company_info);
-		// if (!$this->is_login) {
+		$this->company_info = $this->Common->get_subscription_info($this->license_id);
+		$this->subscription_counts = $this->check_subscription($this->company_info);
+		if (!$this->is_login) {
 
-  //           $this->session->set_userdata("currentUrl", current_url());
+            $this->session->set_userdata("currentUrl", current_url());
 
-  //           $last_url = (isset($_SERVER["HTTP_REFERER"]) && !empty($_SERVER["HTTP_REFERER"]))?$_SERVER["HTTP_REFERER"]:  base_url();
+            $last_url = (isset($_SERVER["HTTP_REFERER"]) && !empty($_SERVER["HTTP_REFERER"]))?$_SERVER["HTTP_REFERER"]:  base_url();
 
-  //           $this->session->set_userdata('referrer', $last_url);
+            $this->session->set_userdata('referrer', $last_url);
 
-  //           if (!$this->is_ajax) {
+            if (!$this->is_ajax) {
 
-  //               redirect('auth/login');
+                redirect('auth/login');
 
-  //           } else {
+            } else {
 
-  //               echo '<script>  window.location = "' . base_url() . 'auth/login"; </script>';
+                echo '<script>  window.location = "' . base_url() . 'auth/login"; </script>';
 
-  //           }
+            }
 
-  //       } 
+        } 
 
 		$this->load->vars($data);
 		
@@ -90,7 +93,9 @@ class Secure extends CI_Controller {
 	}
 
 	function permission_check($module_id, $action) {
-			
+		
+		$this->load->model('modules/Module');
+
 		if($this->role_id != $this->Module->get_default_role($this->license_id)){
 			
 			if(!$this->Module->has_permission($module_id, $this->role_id, $action, $this->license_id) == FALSE)

@@ -61,7 +61,6 @@ if(!in_array($_SERVER['REMOTE_ADDR'], $this->config->item('maintenance_ips')) &&
 	$route['translate_uri_dashes'] = FALSE;
 
 	$route['controller/(:any)'] 			= 'controller/index/$1';
-	$route['settings/(:any)'] 				= 'settings/index/$1';
 
 	$route['my-patients'] 					= 'patients/index';
 	$route['my-profile/(:any)'] 			= 'settings/my_profile/$1';

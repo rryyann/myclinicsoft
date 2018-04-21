@@ -103,7 +103,7 @@ $lang["__logout_info"] = "You can improve your security further after logging ou
 
 //sidebar
 $lang["__dashboard"] = "Dashboard";
-$lang["__my_patients"] = "My Patients";
+$lang["__patients"] = "Patients";
 $lang["__users"] = "Users";
 $lang["__roles"] = "Roles";
 $lang["__templates"] = "Templates";

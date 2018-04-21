@@ -5,10 +5,13 @@ class Records extends Secure {
 	
     function __construct() {
         parent::__construct();
-		
-		$this->load->model('Media_model');
-		$this->load->model('Vaccine');
-		$this->load->model('Dose');
+
+		$this->load->model('Record');
+		$this->load->model('medias/Media');
+		$this->load->model('vaccines/Vaccine');
+		$this->load->model('doses/Dose');
+
+		$this->load->helper('encode');
     }
 
     function _remap($method, $params = array()) {
@@ -62,7 +65,7 @@ class Records extends Secure {
 	}
 	
 	function get_all_complaints(){
-		$user_id = $this->encrypt->decode($this->input->post('id'));
+		$user_id = url_base64_decode($this->input->post('id'));
 		echo json_encode($this->Record->get_all_data('conditions', $user_id));
 		
 	}
@@ -87,8 +90,9 @@ class Records extends Secure {
 		$data['type'] = $type;
 		$data['cdate'] = $cdate;
 		
-		$this->load->model('Vaccine');
-		$this->load->model('Dose');
+		$this->load->model('vaccines/Vaccine');
+		$this->load->model('doses/Dose');
+
 		$vaccines = array();
 		foreach($this->Vaccine->get_all()->result_array() as $row)
 		{
@@ -476,36 +480,44 @@ class Records extends Secure {
 	
 	function get_vaccine_source_ajax() {
 		
-			$_vaccine_sources1 =  array(array('value' => '', 'text' => 'Select'));
-			foreach($this->Vaccine->get_all()->result() as $row => $vaccine)
-			{
-				$_vaccine_sources2[$row]['text'] = $vaccine->vaccine_name;
-                $_vaccine_sources2[$row]['value'] = $vaccine->vaccine_name;
-			}
-			$vaccine_sources = array_merge($_vaccine_sources1, $_vaccine_sources2);
-			echo json_encode($vaccine_sources);
-		
+		$this->load->model('vacciens/Vaccine');
+
+		$_vaccine_sources1 =  array(array('value' => '', 'text' => 'Select'));
+		foreach($this->Vaccine->get_all()->result() as $row => $vaccine)
+		{
+			$_vaccine_sources2[$row]['text'] = $vaccine->vaccine_name;
+            $_vaccine_sources2[$row]['value'] = $vaccine->vaccine_name;
+		}
+		$vaccine_sources = array_merge($_vaccine_sources1, $_vaccine_sources2);
+		echo json_encode($vaccine_sources);
+	
     }
 	
 	function get_doses_source_ajax() {
 		
-			$_doses_sources1 =  array(array('value' => '', 'text' => 'Select'));
-			foreach($this->Dose->get_all()->result() as $row => $dose)
-			{
-				$_doses_sources2[$row]['text'] = $dose->dose_name;
-                $_doses_sources2[$row]['value'] = $dose->dose_name;
-			}
-			$doses_sources = array_merge($_doses_sources1, $_doses_sources2);
-			echo json_encode($doses_sources);
+		$this->load->model('doses/Dose');
+
+		$_doses_sources1 =  array(array('value' => '', 'text' => 'Select'));
+		foreach($this->Dose->get_all()->result() as $row => $dose)
+		{
+			$_doses_sources2[$row]['text'] = $dose->dose_name;
+            $_doses_sources2[$row]['value'] = $dose->dose_name;
+		}
+		$doses_sources = array_merge($_doses_sources1, $_doses_sources2);
+		echo json_encode($doses_sources);
 
     }
 	
 	function get_suggest_records($type, $fields){
+
 		echo json_encode($this->Record->get_suggest_record($type, $fields)->result_array());
+
 	}
 	
 	function docs($id){
 		
+		$this->load->model('templates/Template');
+
 		$templates = array('' => 'Select');
 		$array = array($this->license_id, 'system');
 

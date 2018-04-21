@@ -77,6 +77,7 @@ the <section></section> and you can use wells or panels instead
 	var can_delete = '<?php echo ($this->admin_role_id != $this->role_id) ? $this->Module->has_permission('patient', $this->role_id, 'delete',   $this->license_id) : true; ?>';
 	console.log(can_delete);
 	console.log(can_update);
+	
 	$(".create").click(function (e) {
 		var title = $(this).attr('data-original-title');
 		e.preventDefault();
@@ -98,6 +99,8 @@ the <section></section> and you can use wells or panels instead
 					});
 				}
 			});
+
+		$(this).attr('disabled', true);
 		return false;
 	});
 	/* DO NOT REMOVE : GLOBAL FUNCTIONS!

@@ -1,5 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-require_once('phpass-0.1/PasswordHash.php');
+
+require_once APPPATH. 'modules/auth/libraries/phpass-0.1/PasswordHash.php';
 
 define('strength', 8);
 define('portable', FALSE);

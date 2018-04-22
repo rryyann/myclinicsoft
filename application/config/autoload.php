@@ -65,7 +65,6 @@ $autoload['libraries'] = array(
 	'form_validation',
 	'session',
 	'user_agent', 
-	'location_lib',
 	'gravatar',
 	'template'
 );
@@ -102,7 +101,8 @@ $autoload['helper'] = array(
 	'string',
 	'download', 
 	'security',
-	'directory'
+	'directory',
+	'encode'
 );
 /*
 | -------------------------------------------------------------------

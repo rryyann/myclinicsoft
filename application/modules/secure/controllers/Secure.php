@@ -5,8 +5,8 @@ if (!defined('BASEPATH'))
 class Secure extends CI_Controller {
 	
 	public $license_id;
-	//public $company_info = array();
-	//public $subscription_counts;
+	public $company_info = array();
+	public $subscription_counts;
 	public $role_id; 
 	public $admin_role_id; 
 	public $patient_role_id; 

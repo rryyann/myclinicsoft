@@ -6,8 +6,6 @@ class Dashboard extends Secure {
 	function __construct() {
         parent::__construct();
 
-        $this->load->helper('encode');
-        
         $this->load->language('dashboard', 'english');
         $this->load->language('posts/posts', 'english');
     }

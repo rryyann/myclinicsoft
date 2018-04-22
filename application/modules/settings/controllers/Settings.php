@@ -5,8 +5,9 @@ class Settings extends Secure {
 
 	function __construct() {
         parent::__construct();
+        
         $this->load->model('templates/Template');
-        $this->load->helper('encode');
+        $this->load->library('location_lib');
 
         $this->load->language('setting', 'english');
         $this->load->language('common/common', 'english');

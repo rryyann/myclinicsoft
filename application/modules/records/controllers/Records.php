@@ -107,7 +107,7 @@ class Records extends Secure {
 		}
 		$data['doses']=$doses;
 
-		$this->load->view('ajax/records/'.$type.'/form', $data);
+		$this->load->view('records/records/'.$type.'/form', $data);
 	}
 	
 	function get_dir($path){

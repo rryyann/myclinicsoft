@@ -5,7 +5,7 @@ class Patients extends Secure {
 
 	function __construct() {
         parent::__construct();
-		$this->load->helper('encode');
+
 		$this->load->model('Patient');
 
 		$this->load->language('patients', 'english');
@@ -86,6 +86,8 @@ class Patients extends Secure {
         if ($this->input->is_ajax_request()) 
 		{
 			$this->load->model('roles/Role');
+			$this->load->library('location_lib');
+
 	        $data['info'] = $this->Patient->get_info($id);
 			
 			$roles = array('' => 'Select');
@@ -108,6 +110,7 @@ class Patients extends Secure {
 		$bod = explode('/', $this->input->post('bod'));
 		$clearpass = random_string('numeric',8);
 		$this->load->library('pass_secured');
+
 		if ($id==-1) {
 			$user_data=array(
 				'username'      =>str_replace(' ', '', $this->input->post('first_name').'_'.$clearpass),        
@@ -168,7 +171,7 @@ class Patients extends Secure {
     	if ($this->input->is_ajax_request()) 
 		{
 	    	$data['info'] = $this->Patient->get_profile_info($id);
-	        $this->load->view("ajax/patients_reset", $data);
+	        $this->load->view("reset", $data);
 	    }else{
 	    	$this->session->set_flashdata('alert_error', 'Sorry! Page cannot open by new tab');
             redirect('');
@@ -189,7 +192,7 @@ class Patients extends Secure {
     	if ($this->input->is_ajax_request()) 
 		{
 	    	$data['info'] = $this->Patient->get_profile_info($id);
-	        $this->load->view("ajax/patients_update", $data);
+	        $this->load->view("update", $data);
 	    }else{
 	    	$this->session->set_flashdata('alert_error', 'Sorry! Page cannot open by new tab');
             redirect('');
@@ -201,7 +204,7 @@ class Patients extends Secure {
     	if ($this->input->is_ajax_request()) 
 		{
 	    	$data['info'] = $this->Patient->get_profile_info($id);
-	        $this->load->view("ajax/patients_detail", $data);
+	        $this->load->view("detail", $data);
 	    }else{
 	    	$this->session->set_flashdata('alert_error', 'Sorry! Page cannot open by new tab');
             redirect('');
@@ -237,7 +240,7 @@ class Patients extends Secure {
 			$data['type'] = $type; 
 			$data['info'] = $this->Patient->get_profile_info($patient_id);
 			
-			$this->load->view('ajax/patients_record', $data);
+			$this->load->view('record', $data);
         } 
 		else
 		{
@@ -258,7 +261,7 @@ class Patients extends Secure {
 			$data['pr_result'] = $this->Record->get_all_data($type, $data['id'], 'no');//segment 3 
 			$data['m_result'] = $this->Record->get_all_data($type, $data['id'], 'yes');//segment 3 
 			
-			$this->load->view('ajax/records/'.$type.'/manage', $data);
+			$this->load->view('records/records/'.$type.'/manage', $data);
 		}
 	}
 	

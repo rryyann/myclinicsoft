@@ -6,6 +6,7 @@ class Locations extends Secure
 
     function __construct() {
         parent::__construct();
+        $this->load->library('location_lib');
     }
 
     function _remap($method, $params = array()) {

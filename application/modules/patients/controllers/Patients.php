@@ -26,7 +26,7 @@ class Patients extends Secure {
     private function _init($data)
 	{
 		
-		$this->template
+		$this->layout
 			->title(get_class($this)) //$article->title
 			->set_partial('header', 'include/header') //third param optional $data
 			->set_partial('sidebar', 'include/sidebar') //third param optional $data
@@ -77,7 +77,7 @@ class Patients extends Secure {
 	        echo $this->datatables->generate('json', 'UTF-8');
     	}else{
 	    	$this->session->set_flashdata('alert_error', 'Sorry! Page cannot open by new tab');
-            redirect('');
+            redirect(strtolower(get_class()));
 	    }
     }
 	
@@ -101,7 +101,7 @@ class Patients extends Secure {
 	        $this->load->view("form", $data);
 	    }else{
 	    	$this->session->set_flashdata('alert_error', 'Sorry! Page cannot open by new tab');
-            redirect('');
+            redirect(strtolower(get_class()));
 	    }
     }
 	
@@ -174,7 +174,7 @@ class Patients extends Secure {
 	        $this->load->view("reset", $data);
 	    }else{
 	    	$this->session->set_flashdata('alert_error', 'Sorry! Page cannot open by new tab');
-            redirect('');
+            redirect(strtolower(get_class()));
 	    }
     }
 
@@ -195,7 +195,7 @@ class Patients extends Secure {
 	        $this->load->view("update", $data);
 	    }else{
 	    	$this->session->set_flashdata('alert_error', 'Sorry! Page cannot open by new tab');
-            redirect('');
+            redirect(strtolower(get_class()));
 	    }
     }
 
@@ -207,7 +207,7 @@ class Patients extends Secure {
 	        $this->load->view("detail", $data);
 	    }else{
 	    	$this->session->set_flashdata('alert_error', 'Sorry! Page cannot open by new tab');
-            redirect('');
+            redirect(strtolower(get_class()));
 	    }
     }
 	

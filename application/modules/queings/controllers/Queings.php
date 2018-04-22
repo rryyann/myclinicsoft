@@ -76,6 +76,8 @@ class Queings extends Secure {
 	
 	function preview($id, $date, $mainteinable = false){
 		
+		$this->load->library('location_lib');
+
 		$this->load->model('patients/Patient');
 		$this->load->model('records/Record');
 		$this->load->model('templates/Template');

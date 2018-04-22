@@ -22,7 +22,7 @@ class Templates extends Secure {
     private function _init($data)
 	{
 		
-		$this->template
+		$this->layout
 			->title(get_class($this)) //$article->title
 
 			->set_partial('header', 'include/header') //third param optional $data
@@ -80,11 +80,11 @@ class Templates extends Secure {
 			$data['info'] = $this->Template->get_info($id);
 			
 			$templates = array('' => 'Select');
-			// $array = array($this->license_id, 'system');
+			$array = array($this->license_id, 'system');
 
-			// foreach ($this->Template->get_all($array)->result_array() as $row) {
-			// 	$templates[$row['tid']] = $row['tname'];
-			// }
+			foreach ($this->Template->get_all($array)->result_array() as $row) {
+				$templates[$row['tid']] = $row['tname'];
+			}
 
 			$data['templates'] = $templates;
 			

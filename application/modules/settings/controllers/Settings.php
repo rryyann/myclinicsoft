@@ -5,8 +5,7 @@ class Settings extends Secure {
 
 	function __construct() {
         parent::__construct();
-        
-        $this->load->model('templates/Template');
+
         $this->load->library('location_lib');
 
         $this->load->language('setting', 'english');
@@ -27,17 +26,16 @@ class Settings extends Secure {
     private function _init($data)
 	{
 
-		$this->template
-			->title(get_class($this)) //$article->title
-			->set_partial('header', 'include/header') //third param optional $data
-			->set_partial('sidebar', 'include/sidebar') //third param optional $data
-			->set_partial('ribbon', 'include/ribbon', $data) //third param optional $data
-			->set_partial('footer', 'include/footer') //third param optional $data
-			->set_partial('shortcut', 'include/shortcut') //third param optional $data
+		$this->layout
+			->title(get_class($this)) 
+			->set_partial('header', 'include/header') 
+			->set_partial('sidebar', 'include/sidebar') 
+			->set_partial('ribbon', 'include/ribbon', $data) 
+			->set_partial('footer', 'include/footer') 
+			->set_partial('shortcut', 'include/shortcut') 
 			->set_metadata('author', 'Randy Rebucas')
-			//->inject_partial('header', '<h1>Hello World!</h1>')  //third param optional $data
-			->set_layout('full-column') // application/views/layouts/two_col.php
-			->build('manage', $data); // views/welcome_message
+			->set_layout('full-column') 
+			->build('manage', $data); 
 		
 	}
 
@@ -67,7 +65,6 @@ class Settings extends Secure {
 		{
 			$this->load->model('user/User_model');
 			
-		
 			$data['info'] = $this->User_model->get_profile_info($id);
 			$this->load->view('user/profile', $data);
         } 
@@ -78,6 +75,7 @@ class Settings extends Secure {
 	}
 	
 	function encryptID($user_id){
+
 		redirect('my-profile/'.url_base64_encode($user_id));
 
 	}

@@ -58,7 +58,7 @@ class Auth extends MX_Controller
 			$permissions = ['public_profile','email']; // Optional permissions
 			$data['loginUrl'] = $helper->getLoginUrl(site_url().'auth/doFbLogin', $permissions);
             
-			$this->template
+			$this->layout
 			->title('Login') //$article->title
 			->prepend_metadata('<script src="/js/jquery.js"></script>')
 			->append_metadata('<script src="/js/jquery.flot.js"></script>')
@@ -264,7 +264,7 @@ class Auth extends MX_Controller
 			$data['use_username'] = $use_username;
 
 
-			$this->template
+			$this->layout
 			->title('Register') //$article->title
 			->prepend_metadata('<script src="/js/jquery.js"></script>')
 			->append_metadata('<script src="/js/jquery.flot.js"></script>')

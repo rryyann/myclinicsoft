@@ -24,7 +24,7 @@ class Dashboard extends Secure {
     private function _init($data)
 	{
 		
-		$this->template
+		$this->layout
 			->title(get_class($this)) //$article->title
 			// application/views/some_folder/header
 			->set_partial('header', 'include/header') //third param optional $data

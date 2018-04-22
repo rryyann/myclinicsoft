@@ -30,7 +30,7 @@ class Records extends Secure {
 		
 		$data['module']	= get_class($this);
 		
-        $this->template
+        $this->layout
 			//->title('Blog')
 			->append_metadata('<link rel="stylesheet" type="text/css" href="'.base_url().'admin_assets/plugins/select2/select2.css"/>')
 			->append_metadata('<link rel="stylesheet" type="text/css" href="'.base_url().'admin_assets/plugins/select2/select2-metronic.css"/>')

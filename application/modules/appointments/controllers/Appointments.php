@@ -22,7 +22,7 @@ class Appointments extends Secure {
     private function _init($data)
 	{
 		
-		$this->template
+		$this->layout
 			->title(get_class($this)) //$article->title
 			// application/views/some_folder/header
 			->set_partial('header', 'include/header') //third param optional $data
@@ -84,7 +84,7 @@ class Appointments extends Secure {
 			
 	    }else{
 	    	$this->session->set_flashdata('alert_error', 'Sorry! Page cannot open by new tab');
-            redirect('');
+            redirect(strtolower(get_class()));
 	    }
     }
 	
@@ -134,7 +134,7 @@ class Appointments extends Secure {
 	        $this->load->view("detail", $data);
 	    }else{
 	    	$this->session->set_flashdata('alert_error', 'Sorry! Page cannot open by new tab');
-            redirect('');
+            redirect(strtolower(get_class()));
 	    }
     }
 	

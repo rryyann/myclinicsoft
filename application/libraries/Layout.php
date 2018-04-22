@@ -1,7 +1,7 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * CodeIgniter Template Class
+ * CodeIgniter Layout Class
  *
  * Build your CodeIgniter pages much easier with partials, breadcrumbs, layouts and themes
  *
@@ -12,7 +12,7 @@
  * @license			http://philsturgeon.co.uk/code/dbad-license
  * @link			http://getsparks.org/packages/template/show
  */
-class Template
+class Layout
 {
 	private $_module = '';
 	private $_controller = '';
@@ -33,7 +33,6 @@ class Template
 
 	private $_title_separator = ' | ';
 
-	private $_parser_enabled = TRUE;
 	private $_parser_body_enabled = TRUE;
 
 	private $_theme_locations = array();
@@ -97,12 +96,6 @@ class Template
 		if ($this->_theme)
 		{
 			$this->set_theme($this->_theme);
-		}
-
-		// If the parse is going to be used, best make sure it's loaded
-		if ($this->_parser_enabled === TRUE)
-		{
-			$this->_ci->load->library('parser');
 		}
 
 		// Modular Separation / Modular Extensions has been detected
@@ -743,6 +736,7 @@ class Template
 		// Can just run as usual
 		else
 		{
+			$this->_ci->load->library('parser');
 			// Grab the content of the view (parsed or loaded)
 			$content = ($this->_parser_enabled === TRUE AND $parse_view === TRUE)
 

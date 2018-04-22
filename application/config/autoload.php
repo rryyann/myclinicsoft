@@ -66,7 +66,7 @@ $autoload['libraries'] = array(
 	'session',
 	'user_agent', 
 	'gravatar',
-	'template'
+	'layout'
 );
 /*
 | -------------------------------------------------------------------

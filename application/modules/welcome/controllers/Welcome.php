@@ -5,10 +5,8 @@ class Welcome extends MX_Controller {
 
 	public function index()
 	{
-		$this->template
+		$this->layout
 			->title('Welcome PRB') //$article->title
-			->prepend_metadata('<script src="/js/jquery.js"></script>')
-			->append_metadata('<script src="/js/jquery.flot.js"></script>')
 			// application/views/some_folder/header
 			//->set_partial('header', 'includes/widgets') //third param optional $data
 			// application/views/some_folder/header

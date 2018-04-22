@@ -5,7 +5,6 @@ class User extends Secure {
 
 	function __construct() {
         parent::__construct();
-		$this->load->helper('encode');
 
 		$this->load->language('user', 'english');
         $this->load->language('common/common', 'english');
@@ -25,7 +24,7 @@ class User extends Secure {
     private function _init($data)
 	{
 		
-		$this->template
+		$this->layout
 			->title(get_class($this)) //$article->title
 			// application/views/some_folder/header
 			->set_partial('header', 'include/header') //third param optional $data

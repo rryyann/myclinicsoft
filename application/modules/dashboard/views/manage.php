@@ -70,10 +70,10 @@ the <section></section> and you can use wells or panels instead
 </section>
 <!-- end widget grid -->
 <script type="text/javascript">
-	var BASE_URL = '<?php echo base_url();?>';
-	var lic = '<?php echo $this->license_id;?>';
-	var role = '<?php echo $user_info->role_id;?>';
-	var user_id = '<?php echo $this->user_id;?>';
+	var Base_Url 	= '<?php echo base_url();?>';
+	var License_Id 	= '<?php echo $this->license_id;?>';
+	var Role_Id 	= '<?php echo $this->role_id;?>';
+	var User_Id 	= '<?php echo $this->user_id;?>';
 	/* DO NOT REMOVE : GLOBAL FUNCTIONS!
 	 *
 	 * pageSetUp(); WILL CALL THE FOLLOWING FUNCTIONS
@@ -118,7 +118,7 @@ the <section></section> and you can use wells or panels instead
 		
 		//load all patients encounter today	
 		$.ajax({
-			url: BASE_URL+'patients/load_ajax/',
+			url: Base_Url+'patients/load_ajax/',
 			type: 'post', 
 			data: {
 				filter: '<?php echo date('Y-m-d');?>'
@@ -130,9 +130,9 @@ the <section></section> and you can use wells or panels instead
 				$.each(response.data, function(index, val) {
 					
 					if(val.avatar){
-						picture =  '<img src="'+BASE_URL+'uploads/'+lic+'/profile-picture/'+val.avatar+'" alt="'+val.username+'" class="online" />';
+						picture =  '<img src="'+Base_Url+'uploads/'+License_Id+'/profile-picture/'+val.avatar+'" alt="'+val.username+'" class="online" />';
 					}else{
-						picture =  '<img src="'+BASE_URL+'img/avatars/blank.png" alt="'+val.username+'" class="online" />';
+						picture =  '<img src="'+Base_Url+'img/avatars/blank.png" alt="'+val.username+'" class="online" />';
 					}
 						
 					item =	'<div class="user" title="'+val.email+'">'+

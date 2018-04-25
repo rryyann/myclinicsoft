@@ -1,9 +1,24 @@
 <?php
 require_once APPPATH. 'modules/secure/controllers/Secure.php';
 
+/*
+ * MyClinicSoft
+ * 
+ * A web based clinical system
+ *
+ * @package		MyClinicSoft
+ * @author		Randy Rebucas
+ * @copyright	Copyright (c) 2016 - 2018 MyClinicSoft, LLC
+ * @license		http://www.myclinicsoft.com/license.txt
+ * @link		http://www.myclinicsoft.com
+ * 
+ */
+
 class Patients extends Secure {
 
-	function __construct() {
+	function __construct() 
+	{
+
         parent::__construct();
 
 		$this->load->model('Patient');
@@ -12,38 +27,36 @@ class Patients extends Secure {
         $this->load->language('common/common', 'english');
     }
 
-    function _remap($method, $params = array()) {
+    function _remap($method, $params = array()) 
+    {
  
         if (method_exists($this, $method)) {
             return call_user_func_array(array($this, $method), $params);
         }
 
-        $directory = getcwd();
-        $class_name = get_class($this);
-        $this->display_error_log($directory,$class_name,$method);
+        $this->display_error_log(getcwd(), get_class($this), $method);
     }
 
     private function _init($data)
 	{
 		
 		$this->layout
-			->title(get_class($this)) //$article->title
-			->set_partial('header', 'include/header') //third param optional $data
-			->set_partial('sidebar', 'include/sidebar') //third param optional $data
-			->set_partial('ribbon', 'include/ribbon', $data) //third param optional $data
-			->set_partial('footer', 'include/footer') //third param optional $data
-			->set_partial('shortcut', 'include/shortcut') //third param optional $data
+			->title(get_class($this))
+			->set_partial('header', 'include/header') 
+			->set_partial('sidebar', 'include/sidebar') 
+			->set_partial('ribbon', 'include/ribbon', $data) 
+			->set_partial('footer', 'include/footer')
+			->set_partial('shortcut', 'include/shortcut') 
 			->set_metadata('author', 'Randy Rebucas')
-			// application/views/some_folder/header
-			//->inject_partial('header', '<h1>Hello World!</h1>')  //third param optional $data
-			->set_layout('full-column') // application/views/layouts/two_col.php
-			->build('manage', $data); // views/welcome_message);
+			->set_layout('full-column') 
+			->build('manage', $data);
 		
 	}
 
 	function index()
 	{
 		$data['module'] = get_class();
+
 		if ($this->input->is_ajax_request()) 
 		{
 			$this->load->view('manage', $data);
@@ -54,7 +67,8 @@ class Patients extends Secure {
 		}
 	}
 
-	function load_ajax() {
+	function load_ajax() 
+	{
 	
 		if ($this->input->is_ajax_request()) 
 		{	
@@ -75,13 +89,16 @@ class Patients extends Secure {
 	        $this->datatables->from('users');
 
 	        echo $this->datatables->generate('json', 'UTF-8');
-    	}else{
+    	}
+    	else
+    	{
 	    	$this->session->set_flashdata('alert_error', 'Sorry! Page cannot open by new tab');
             redirect(strtolower(get_class()));
 	    }
     }
 	
-   function view($id = -1){
+   function view($id = -1)
+   {
    	
         if ($this->input->is_ajax_request()) 
 		{
@@ -99,19 +116,23 @@ class Patients extends Secure {
 			$data['option'] = $this->session->userdata('option');
 
 	        $this->load->view("form", $data);
-	    }else{
+	    }
+	    else
+	    {
 	    	$this->session->set_flashdata('alert_error', 'Sorry! Page cannot open by new tab');
             redirect(strtolower(get_class()));
 	    }
     }
 	
-	function doSave($id = -1){
+	function doSave($id = -1)
+	{
+		$this->load->library('pass_secured');
 		
 		$bod = explode('/', $this->input->post('bod'));
 		$clearpass = random_string('numeric',8);
-		$this->load->library('pass_secured');
-
-		if ($id==-1) {
+		
+		if ($id==-1) 
+		{
 			$user_data=array(
 				'username'      =>str_replace(' ', '', $this->input->post('first_name').'_'.$clearpass),        
 				'email'         =>strtolower(str_replace(' ', '', $this->input->post('first_name').'_'.$clearpass.'@sample.com')),
@@ -122,7 +143,9 @@ class Patients extends Secure {
 				'created'       => date('Y-m-d H:i:s'),
 				'token'			=> date('Ymd').'-'.random_string('numeric',8)
 			);
-		} else {
+		} 
+		else 
+		{
 			$user_data=array();
 		}
 
@@ -155,7 +178,7 @@ class Patients extends Secure {
 			{
 				echo json_encode(array('success'=>true,'message'=>$profile_data['lastname']));
 			}
-			else //previous employee
+			else //previous
 			{
 				echo json_encode(array('success'=>true,'message'=>$profile_data['lastname']));
 			}
@@ -265,7 +288,8 @@ class Patients extends Secure {
 		}
 	}
 	
-	function get_record_files(){
+	function get_record_files()
+	{
 		if ($this->input->is_ajax_request()) 
 		{
 			$this->load->model('records/Record');

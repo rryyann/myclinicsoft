@@ -1,6 +1,18 @@
 <?php
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
+/*
+ * MyClinicSoft
+ * 
+ * A web based clinical system
+ *
+ * @package		MyClinicSoft
+ * @author		Randy Rebucas
+ * @copyright	Copyright (c) 2016 - 2018 MyClinicSoft, LLC
+ * @license		http://www.myclinicsoft.com/license.txt
+ * @link		http://www.myclinicsoft.com
+ * 
+ */
 
 class Secure extends CI_Controller {
 	
@@ -15,7 +27,8 @@ class Secure extends CI_Controller {
     public $is_ajax;
     public $content;
 	
-    function __construct() {
+    function __construct() 
+    {
         parent::__construct();
 
         $this->permission_check(uri_string(), 'view');
@@ -30,22 +43,25 @@ class Secure extends CI_Controller {
         $this->load->model('modules/Module');
         $this->load->model('common/Common');
 
-		$this->role_id = $this->tank_auth->get_role_id();
-        $this->license_id = $this->tank_auth->get_license_key();
-        $this->user_id = $this->tank_auth->get_user_id();
-        $this->is_login = $this->tank_auth->is_logged_in();
-        $this->is_ajax = $this->input->is_ajax_request();
-        //get subcription information
-        $data['user_info'] = $this->User_model->get_profile_info($this->user_id);
-		
+		$this->role_id 		= $this->tank_auth->get_role_id();
+        $this->license_id 	= $this->tank_auth->get_license_key();
+        $this->user_id 		= $this->tank_auth->get_user_id();
+        $this->is_login 	= $this->tank_auth->is_logged_in();
+        $this->is_ajax 		= $this->input->is_ajax_request();
+       
 		$this->admin_role_id = $this->Role->get_default_role(2, $this->license_id);
+		
 		$this->patient_role_id = $this->Role->get_default_patient_role($this->license_id);
 
 		$this->company_info = $this->Common->get_subscription_info($this->license_id);
 
 		$this->subscription_counts = $this->check_subscription($this->company_info);
 		
-		if (!$this->is_login) {
+		 //get subcription information
+        $data['user_info'] 	= $this->User_model->get_profile_info($this->user_id);
+
+		if (!$this->is_login) 
+		{
 
             $this->session->set_userdata("currentUrl", current_url());
 
@@ -53,11 +69,14 @@ class Secure extends CI_Controller {
 
             $this->session->set_userdata('referrer', $last_url);
 
-            if (!$this->is_ajax) {
+            if (!$this->is_ajax) 
+            {
 
                 redirect('auth/login');
 
-            } else {
+            } 
+            else 
+            {
 
                 echo '<script>  window.location = "' . base_url() . 'auth/login"; </script>';
 
@@ -72,10 +91,13 @@ class Secure extends CI_Controller {
 	function check_subscription($sUserInfo)
 	{
 		
-		if($sUserInfo->subscription_id != 1){
+		if($sUserInfo->subscription_id != 1)
+		{
 			
 			$seconds = strtotime($sUserInfo->expiration_date) - time();
-			if($seconds != 0){
+
+			if($seconds != 0)
+			{
 				
 				$days = floor($seconds / 86400);
 				$seconds %= 86400;
@@ -86,7 +108,9 @@ class Secure extends CI_Controller {
 				$minutes = floor($seconds / 60);
 				$seconds %= 60;
 				
-			}else{
+			}
+			else
+			{
 				
 				$days = 0;
 				
@@ -99,29 +123,59 @@ class Secure extends CI_Controller {
 
 	}
 
-	function permission_check($module_id, $action) {
+	function permission_check($module_id, $action) 
+	{
 		
 		$this->load->model('modules/Module');
 
-		if($this->role_id != $this->Module->get_default_role($this->license_id)){
+		if($this->role_id != $this->Module->get_default_role($this->license_id))
+		{
 			
 			if(!$this->Module->has_permission($module_id, $this->role_id, $action, $this->license_id) == FALSE)
 			{
+
 				return false;
-			}else{
+
+			}
+			else
+			{
+
 				return true;
+
 			}
 			
-		}else{
-			return true;
 		}
+		else
+		{
+
+			return true;
+
+		}
+
     }
 	
-    public function display_error_log($directory, $class_name, $method) {
+	/**
+     * Display Error Log
+     *
+     * @since       1.0.1 First time this was introduced.
+     * @return      void
+     */
+
+    function display_error_log($directory, $class_name, $method) 
+    {
+
         $page = "'" . $directory . "\\" . $class_name . "\\" . $method . "' is not found";
         show_404($page);
+
     }
 	
+	/**
+     * Remove Duplicates Cookies
+     *
+     * @since       1.0.1 First time this was introduced.
+     * @return      void
+     */
+
 	function _remove_duplicate_cookies ()
 	{
 		//php < 5.3 doesn't have header remove so this function will fatal error otherwise
@@ -175,10 +229,6 @@ class Secure extends CI_Controller {
 		}
 	}
 	
-	function setup(){
-		
-		$this->load->view('ajax/setup');
-	}
 	
 	/**
      * Facebook initialize config
@@ -187,7 +237,8 @@ class Secure extends CI_Controller {
      * @return      void
      */
 
-    function fb_init(){
+    function fb_init()
+    {
         
         $this->fb = new Facebook\Facebook([
             'app_id' => '224864781343525',

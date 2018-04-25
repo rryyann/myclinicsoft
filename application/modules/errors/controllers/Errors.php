@@ -14,15 +14,12 @@ require_once APPPATH. 'modules/secure/controllers/Secure.php';
  * 
  */
 
-class Dashboard extends Secure {
+class Errors extends Secure {
 
 	function __construct() 
 	{
 
         parent::__construct();
-
-        $this->load->language('dashboard', 'english');
-        $this->load->language('posts/posts', 'english');
     }
 
     function _remap($method, $params = array()) 
@@ -37,7 +34,9 @@ class Dashboard extends Secure {
 
     private function _init($data)
 	{
-		
+		$data['heading'] = '404 Page Not Found';
+		$data['message'] = 'The page you requested was not found.';
+
 		$this->layout
 			->title(get_class($this)) 
 			->set_partial('header', 'include/header') 

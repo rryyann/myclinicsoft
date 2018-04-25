@@ -44,7 +44,7 @@
 				<?php } ?>
 				<?php if(($this->admin_role_id != $this->role_id) ? $this->Module->has_permission('patient', $this->role_id, 'view',   $this->license_id) : true) { ?>
 				<li>
-					<a title="<?php echo $this->lang->line('__my_patients');?>" href="<?php echo site_url('my-patients'); ?>"><i class="fa fa-lg fa-fw fa-users"></i> <span class="menu-item-parent"><?php echo $this->lang->line('__patients');?></span></a>
+					<a title="<?php echo $this->lang->line('__patients');?>" href="<?php echo site_url('patients'); ?>"><i class="fa fa-lg fa-fw fa-users"></i> <span class="menu-item-parent"><?php echo $this->lang->line('__patients');?></span></a>
 				</li>
 				<?php } ?>
 				<?php if(($this->admin_role_id != $this->role_id) ? $this->Module->has_permission('users', $this->role_id, 'view',   $this->license_id) : true) { ?>
